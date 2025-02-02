@@ -83,4 +83,33 @@ function upload() {
     return $namaFileBaru;
 }
 
+function ubah($data) {
+    global $conn;
+
+    $id = $data["id"] ;     
+    $judul = htmlspecialchars($data ["judul"]);
+    $konten = htmlspecialchars( $data ["konten"]);
+    $gambarLama = htmlspecialchars($data ["fotoLama"]);
+
+    //cek apakah user menambahkan gambar baru atau tidak
+    if ( $_FILES ['foto'] ['error'] === 4 ) {
+        $gambar = $gambarLama ;
+    } else {
+        $gambar = upload() ;
+    }
+
+
+
+    //query insert data / tambahkan data
+    $query = "UPDATE posts SET 
+        judul = '$judul',
+        konten = '$konten',
+        foto = '$gambar'
+        WHERE id = $id
+    ";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>
