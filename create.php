@@ -49,5 +49,3 @@ if (isset($_POST["submit"])) {
         </main>
     </div>
 </div>
-
-<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. At quas sequi mollitia veniam. Voluptatibus quam quae, fuga esse aperiam sint dicta ducimus culpa, debitis fugit odit corrupti veniam quis quibusdam qui hic fugiat dolorem unde expedita architecto tempora inventore cumque. Fugit commodi atque cum amet assumenda. Suscipit animi, rem iusto beatae veritatis aperiam amet, dignissimos hic voluptates culpa iure laborum mollitia rerum repudiandae in? Eius quos asperiores, provident amet, aliquam quod exercitationem quibusdam modi molestiae voluptatum dolorem laudantium, eos soluta. Expedita, libero velit voluptate, voluptates id at sunt incidunt voluptatum aut alias porro animi iure omnis eius saepe neque commodi. -->
