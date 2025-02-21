@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Berita CNN Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="bg-red-600 text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex space-x-4">
+          <a href="#" class="font-bold text-xl">CNN Indonesia</a>
+          <nav class="space-x-4 text-center">
+            <a href="#" class="hover:text-gray-200">Home</a>
+            <a href="#" class="hover:text-gray-200">Nasional</a>
+            <a href="#" class="hover:text-gray-200">Internasional</a>
+            <a href="#" class="hover:text-gray-200">Ekonomi</a>
+            <a href="#" class="hover:text-gray-200">Olahraga</a>
+            <a href="#" class="hover:text-gray-200">Teknologi</a>
+            <a href="#" class="hover:text-gray-200">Gaya Hidup</a>
+          </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="bg-white text-red-600 px-4 py-2 rounded">Login</button>
+          <button class="bg-white text-red-600 px-4 py-2 rounded">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
+      <!-- Main News Section -->
+      <section class="col-span-2">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <img
+            src="https://via.placeholder.com/800x400"
+            alt="Hasto Kristiyanto Ditahan"
+            class="w-full h-60 object-cover rounded-lg"
+          />
+          <h2 class="text-xl font-semibold mt-4">
+            KPK Tahan Sekjen PDIP Hasto Kristiyanto Kasus Harun Masiku
+          </h2>
+          <p class="mt-2 text-gray-700">
+            Komisi Pemberantasan Korupsi (KPK) menahan Sekjen PDIP Hasto
+            Kristiyanto usai pemeriksaan, Kamis (20/2).
+          </p>
+        </div>
+        <div class="mt-6">
+          <h3 class="text-lg font-semibold">Video</h3>
+          <a href="#" class="text-blue-600 hover:underline"
+            >Hasto Kristiyanto Ditahan KPK</a
+          >
+        </div>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold">Terpopuler</h3>
+        <ul class="mt-4 space-y-4">
+          <li>
+            <a href="#" class="text-blue-600 hover:underline"
+              >KPK Tahan Sekjen PDIP Hasto Kristiyanto Kasus Harun Masiku</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-blue-600 hover:underline"
+              >Hasto Kristiyanto Ditahan KPK</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-blue-600 hover:underline"
+              >Penyataan Maaf Band Sukatani soal Lagu Bayar Bayar</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-blue-600 hover:underline"
+              >Hasto Resmi Ditahan di KPK</a
+            >
+          </li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2025 CNN Indonesia. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

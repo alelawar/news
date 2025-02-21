@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Feb 02, 2025 at 08:33 AM
+-- Generation Time: Feb 21, 2025 at 02:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,7 +39,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `judul`, `konten`, `foto`) VALUES
-(1, 'skibidi amat', 'asd', '679f1dc1e67de.jpg');
+(1, 'hahay', 'lorem ipsum', '679f7a12be45c.jpg');
 
 -- --------------------------------------------------------
 
@@ -52,6 +52,13 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`) VALUES
+(1, 'as', '$2y$10$RYvrCyTxGqDnimY03BugEOY290GfKarudNaGN2JFxKmp/lsniYWOa');
 
 --
 -- Indexes for dumped tables
@@ -83,7 +90,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

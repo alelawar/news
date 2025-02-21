@@ -4,4 +4,3 @@
     <?php include('components/navbar.php') ?>
 
     
-</body>

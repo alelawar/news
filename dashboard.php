@@ -1,6 +1,14 @@
 <?php 
 require("functions.php");
 
+session_start();
+if ( !isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+$username = $_SESSION["username"];
+
 $posts = query("SELECT * FROM posts ORDER BY judul ASC") ;
 
 
@@ -15,7 +23,7 @@ $posts = query("SELECT * FROM posts ORDER BY judul ASC") ;
         <!-- Konten Utama -->
         <div class="flex-1 p-6 ">
             <header class="flex justify-between items-center">
-                <h2 class="text-2xl font-semibold">Selamat Datang di Dashboard</h2>
+                <h2 class="text-2xl font-semibold">Selamat Datang di Dashboard | <?= $username ?></h2>
             </header>
 
             <main class="mt-6">
