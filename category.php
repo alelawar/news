@@ -1,69 +1,85 @@
 <?php
 require 'functions.php';
 
-session_start();
+$cat_id = $_GET['cat_id'];
 
-$username = $_SESSION["username"] ?? null;
+$datas = query("SELECT * FROM posts WHERE category_id LIKE '$cat_id'");
 
-$rekomendation = $mainContents =  query("
-SELECT posts.*, categories.name AS category_name 
-FROM posts 
-JOIN categories ON posts.category_id = categories.id
-ORDER BY RAND()
-LIMIT 10
-");
+$catValid = query("SELECT name, id FROM categories WHERE id LIKE '$cat_id'")[0];
 
-$mainContent =  query("
-SELECT posts.*, categories.name AS category_name 
-FROM posts 
-JOIN categories ON posts.category_id = categories.id
-ORDER BY RAND()
-LIMIT 1
-")[0];
+// var_dump($catValid);
+
+// $category = query("SELECT name FROM categories");
+
+// var_dump($category);
+
+$mainContent = query("
+    SELECT posts.*, categories.name AS category_name 
+    FROM posts 
+    JOIN categories ON posts.category_id = categories.id 
+    WHERE posts.category_id = '$cat_id' 
+    ORDER BY posts.judul ASC LIMIT 1")[0];
 
 $mainContents =  query("
 SELECT posts.*, categories.name AS category_name 
 FROM posts 
 JOIN categories ON posts.category_id = categories.id
+WHERE posts.category_id = '$cat_id' 
 ORDER BY RAND()
 LIMIT 2
 ");
 
-
-
-$datas = query("SELECT judul, link FROM posts");
-
-$news =  query("
-SELECT posts.*, categories.name AS category_name 
-FROM posts 
-JOIN categories ON posts.category_id = categories.id
-ORDER BY RAND()
-LIMIT 5
-");
+$ppls = query("
+    SELECT  posts.link, posts.judul 
+    FROM posts 
+    JOIN categories ON posts.category_id = categories.id 
+    WHERE posts.category_id = '$cat_id'
+    ORDER BY posts.judul ASC");
+// var_dump($mainContent);
 
 $newest = query("
 SELECT posts.*, categories.name AS category_name 
 FROM posts 
 JOIN categories ON posts.category_id = categories.id
+WHERE posts.category_id = '$cat_id' 
+ORDER BY RAND()
+LIMIT 10
 ");
+
+$rekomendation = $mainContents =  query("
+SELECT posts.*, categories.name AS category_name 
+FROM posts 
+JOIN categories ON posts.category_id = categories.id
+WHERE posts.category_id = '$cat_id' 
+ORDER BY RAND()
+LIMIT 10
+");
+
+
+session_start();
+
+$username = $_SESSION["username"] ?? null;
+
 ?>
 <?php include("components/layout.php") ?>
 
-<!-- Main Content -->
+<div class="container mx-20 mt-5 w-1/2 ">
+    <h3 class="text-3xl font-bold "><span class="bg-red-600 p-1 rounded-lg">Yo<span class="text-white">News</span></span> > <a href="category.php?cat_id=<?= $catValid['id'] ?>"><?= $catValid['name'] ?></a> </h3>
+</div>
 <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
     <!-- Main News Section -->
     <section class="col-span-2  ">
         <!-- main ssection atas -->
-        <div class=" p-6 rounded-lg shadow-lg bg-gray-800">
-            <div class="flex justify-between border-b-2 pb-4 border-white/80 items-center gap-5 group cursor-pointer">
+        <div class=" p-6 shadow-lg border border-gray-400 ">
+            <div class="flex justify-between border-b-2 pb-4 border-gray-400 items-center gap-5 group cursor-pointer">
                 <div class="max-w-2xs">
-                    <a href="<?= $mainContent['link'] ?>" class="text-2xl font-semibold text-white group-hover:underline-offset-1 group-hover:underline">
+                    <a href="<?= $mainContent['link'] ?>" class="text-2xl font-semibold text-dark group-hover:underline-offset-1 group-hover:underline">
                         <?= $mainContent['judul'] ?>
                     </a>
                     <p class="mt-2 text-sky-500 font-medium">
                         <?= $mainContent['category_name'] ?>
                     </p>
-                    <p class="mt-2 text-white/80">
+                    <p class="mt-2 text-dark/80">
                         <?= $mainContent['konten'] ?>
                     </p>
                 </div>
@@ -73,26 +89,27 @@ JOIN categories ON posts.category_id = categories.id
 
             <!-- main bawah -->
             <div class="flex grid-cols-2 items-center mt-4 gap-8">
-                <?php foreach ($mainContents as $mc) : ?>
-                    <div class="w-full flex grid-cols-1 border-r-2 px-4 border-white/80">
-                        <p class="text-white/80 text-lg"><?= $mc['judul'] ?></p>
-                        <div class="aspect-square size-20">
-                            <img src="img/<?= $mc['foto'] ?>" class="w-full h-full object-cover" alt="">
+                <div class="flex grid-cols-2 items-center mt-4 gap-8">
+                    <?php foreach ($mainContents as $mc) : ?>
+                        <div class="w-full flex grid-cols-1 border-r-2 px-4 border-gray-400">
+                            <p class="text-dark/80 text-lg"><?= $mc['judul'] ?></p>
+                            <div class="aspect-square size-20">
+                                <img src="img/<?= $mc['foto'] ?>" class="w-full h-full object-cover" alt="">
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+                <!-- end main bawah -->
             </div>
-            <!-- end main bawah -->
-        </div>
     </section>
 
     <!-- Sidebar -->
     <aside class="bg-white p-6 rounded-lg overflow-y-scroll h-3/4 shadow-lg">
         <h3 class="text-2xl font-semibold">Terpopuler :</h3>
         <ul class="mt-4 space-y-4">
-            <?php foreach ($datas as $data) : ?>
+            <?php foreach ($ppls as $popular) : ?>
                 <li>
-                    <a href="<?= $data['link'] ?>" class="text-blue-600  hover:underline"><?= $data['judul'] ?></a>
+                    <a href="<?= $popular['link'] ?>" class="text-blue-600  hover:underline"><?= $popular['judul'] ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -100,28 +117,6 @@ JOIN categories ON posts.category_id = categories.id
     <!-- end Sidebar -->
 </div>
 
-<!-- berita utama -->
-<div class="container mx-auto p-6 mb-8">
-    <div class="mt-6">
-        <h3 class="text-2xl font-bold mb-5 border-red-500 w-1/6 border-b-4 uppercase">Berita Utama :</h3>
-        <div class="flex grid-cols-5 gap-8">
-            <!-- artikel -->
-            <?php foreach ($news as $new) : ?>
-                <article class="bg-white p-4 rounded shadow w-full">
-                    <img src="img/<?= $new['foto'] ?>" alt="" class="w-full object-cover">
-                    <a href="<?= $new['link'] ?>" class="text-sm font-semibold hover:underline"><?= $new['judul'] ?></a>
-                    <p class="mt-2 text-xs"><?= $new['category_name'] ?></p>
-                    <a href="#" class="text-blue-500 hover:underline mt-2 ">Read More</a>
-                </article>
-
-            <?php endforeach; ?>
-            <!-- end artikel -->
-        </div>
-    </div>
-</div>
-<!-- end berita utama -->
-
-<!-- scroll content -->
 <div class="px-16">
     <h3 class="text-2xl font-bold mb-5  uppercase">Terbaru :</h3>
 </div>
@@ -168,6 +163,5 @@ JOIN categories ON posts.category_id = categories.id
     <!-- end Sidebar scroll -->
     <!-- end section start -->
 </div>
-<!-- end scroll content -->
 
 <?php include("components/foot.php") ?>

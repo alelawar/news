@@ -7,6 +7,12 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// request url supaya active
+function isActive($path)
+{
+    return strpos($_SERVER['REQUEST_URI'], $path) !== false ? 'active' : '';
+}
+
 function query($query) {
     global $conn;
     $result = mysqli_query($conn, $query);
@@ -22,6 +28,8 @@ function tambah($data) {
 
     $judul = htmlspecialchars($data["judul"]);
     $konten = htmlspecialchars($data["konten"]);
+    $link = $data["link"];
+    $category = htmlspecialchars($data["category"]);
 
     // Upload gambar
     $gambar = upload();
@@ -30,7 +38,7 @@ function tambah($data) {
     }
 
     // Query insert data
-    $query = "INSERT INTO posts (judul, konten, foto) VALUES ('$judul', '$konten', '$gambar')";
+    $query = "INSERT INTO posts (judul, konten, link,foto ,category_id) VALUES ('$judul', '$konten','$link' , '$gambar', '$category')";
     
     if (!mysqli_query($conn, $query)) {
         die("Query gagal: " . mysqli_error($conn));
@@ -89,7 +97,9 @@ function ubah($data) {
     $id = $data["id"] ;     
     $judul = htmlspecialchars($data ["judul"]);
     $konten = htmlspecialchars( $data ["konten"]);
+    $link =  $data ["link"];
     $gambarLama = htmlspecialchars($data ["fotoLama"]);
+    $cateoryBaru = htmlspecialchars($data ["categoryBaru"]);
 
     //cek apakah user menambahkan gambar baru atau tidak
     if ( $_FILES ['foto'] ['error'] === 4 ) {
@@ -104,13 +114,19 @@ function ubah($data) {
     $query = "UPDATE posts SET 
         judul = '$judul',
         konten = '$konten',
-        foto = '$gambar'
-        WHERE id = $id
+        link = '$link',
+        foto = '$gambar',
+        category_id = '$cateoryBaru'
+        WHERE id = $id 
     ";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
+
+// fungsi search
+
+
 
 function reg ($data) {
     global $conn;
@@ -147,6 +163,28 @@ function reg ($data) {
 
     //tambahkan akun ke database 
     mysqli_query($conn,"INSERT INTO users VALUES('', '$username', '$password')");
+
+    return mysqli_affected_rows($conn);
+}
+
+function hapus($id) {
+    global $conn;
+    mysqli_query($conn, "DELETE FROM posts WHERE id = $id ");
+    return mysqli_affected_rows($conn);
+}
+
+function createCategory($data) {
+    global $conn;
+
+    $nama = htmlspecialchars($data["name"]);
+
+
+    // Query insert data
+    $query = "INSERT INTO categories (name) VALUES ('$nama')";
+    
+    if (!mysqli_query($conn, $query)) {
+        die("Query gagal: " . mysqli_error($conn));
+    }
 
     return mysqli_affected_rows($conn);
 }
